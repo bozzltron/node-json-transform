@@ -20,5 +20,8 @@
   "bugs": {
     "url": "https://github.com/bozzltron/node-json-transform/issues"
   },
-  "homepage": "https://github.com/bozzltron/node-json-transform"
+  "homepage": "https://github.com/bozzltron/node-json-transform",
+  "dependencies": {
+    "underscore": "^1.7.0"
+  }
 }

@@ -7,7 +7,7 @@ exports.DataTransform = function(data, map){
 	return {
 
 		getValue : function(obj, key) {
-	
+
 			if(typeof(obj) == "undefined") {
 				return "";
 			}

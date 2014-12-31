@@ -1,5 +1,10 @@
 # node-data-transform
 
+Usage
+
+```javascript
+var DataTransform = require("node-json-transform").DataTransform,
+```
 
 First we need some data.
 
@@ -47,6 +52,12 @@ You can read this as follows:
 - Get the array of objects in "posts".
 - Map the name to title, info to description etc.
 - Run Data.parse on the date value
+
+Run it
+```javascript
+var dataTransform = DataTransform(data, map);
+console.log(dataTransform.getValue(data, "posts"));
+```
 
 The expected output.
 ```javascript
