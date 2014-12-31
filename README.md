@@ -60,7 +60,8 @@ You can read this as follows:
 Run it
 ```javascript
 var dataTransform = DataTransform(data, map);
-console.log(dataTransform.getValue(data, "posts"));
+var result = dataTransform.transform();
+console.log(result);
 ```
 
 The expected output.
