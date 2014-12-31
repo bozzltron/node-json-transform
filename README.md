@@ -19,7 +19,11 @@ var data = {
 			extra : {
 				link : "http://goo.cm"
 			},
-			list1:[],
+			list1:[
+				{
+					name:"mike"
+				}
+			],
 			list2:[
 				{
 					item: "thing"
@@ -62,19 +66,12 @@ console.log(dataTransform.getValue(data, "posts"));
 The expected output.
 ```javascript
 [{
-	title : "title1",
-	description: "description1",
-	blog: "This is a blog.",
-	date: "11/4/2013",
-	extra : {
-		link : "http://goo.cm"
-	},
-	list1:[],
-	list2:[
-		{
-			item: "thing"
-		}
-	]
+	name : "title1",
+	info: "description1",
+	text: "This is a blog.",
+	date: 1383544800000,
+	link: "http://goo.cm",
+	info: "mike"
 }] 
 ```
 
