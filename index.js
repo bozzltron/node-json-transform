@@ -18,14 +18,18 @@ exports.DataTransform = function(data, map){
 
 			var value = obj || data,
 				key = key || map.list,
+				keys = null;
+			if(key == "") {
+				value = "";
+			} else {
 				keys = key.split('.');
-
-			for(var i = 0; i < keys.length; i++ ) {
-				if(typeof(value) !== "undefined" && 
-					value[keys[i]]) {
-					value = value[keys[i]];
-				} else {
-					return null;
+				for(var i = 0; i < keys.length; i++ ) {
+					if(typeof(value) !== "undefined" && 
+						value[keys[i]]) {
+						value = value[keys[i]];
+					} else {
+						return null;
+					}
 				}
 			}
 			
@@ -62,7 +66,11 @@ exports.DataTransform = function(data, map){
 
 			var obj = {};
 			_.each(map.item, _.bind(function(oldkey, newkey) {
-				obj[newkey] = this.getValue(item, oldkey);
+				if(typeof(oldkey) == "string" && oldkey.length > 0) {
+					obj[newkey] = this.getValue(item, oldkey);
+				} else {
+					obj[newkey] = "";
+				}	
 			}, this));
 			return obj;
 
