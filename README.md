@@ -28,7 +28,8 @@ var data = {
 				{
 					item: "thing"
 				}
-			]
+			],
+			clearMe: "text"
 		}	
 	]
 };
@@ -45,7 +46,8 @@ var map = {
 		text: "blog",
 		date: "date",
 		link: "extra.link",
-		item: "list1.0.name"
+		item: "list1.0.name",
+		clearMe: ""
 	},
 	operate: [
 		{run: "Date.parse", on: "date"}
@@ -72,11 +74,16 @@ The expected output.
 	text: "This is a blog.",
 	date: 1383544800000,
 	link: "http://goo.cm",
-	info: "mike"
+	info: "mike",
+	clearMe: ""
 }] 
 ```
 
 Enjoy!
+
+## Changelog
+
+1.0.3  Added the ability to clear and set field by passing an empty string in the map.
 
 ## Credits
 
