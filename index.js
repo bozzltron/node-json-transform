@@ -68,6 +68,14 @@ exports.DataTransform = function(data, map){
 			_.each(map.item, _.bind(function(oldkey, newkey) {
 				if(typeof(oldkey) == "string" && oldkey.length > 0) {
 					obj[newkey] = this.getValue(item, oldkey);
+				} else if( _.isArray(oldkey) ) {
+					
+					var array = [];
+					_.each(oldkey, _.bind(function(key){
+						array.push(this.getValue(item, key));
+					},this));
+					obj[newkey] = array;
+					
 				} else {
 					obj[newkey] = "";
 				}	

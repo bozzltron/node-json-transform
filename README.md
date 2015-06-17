@@ -47,7 +47,8 @@ var map = {
 		date: "date",
 		link: "extra.link",
 		item: "list1.0.name",
-		clearMe: ""
+		clearMe: "",
+		fieldGroup: ['title', 'extra']
 	},
 	operate: [
 		{run: "Date.parse", on: "date"}
@@ -75,7 +76,8 @@ The expected output.
 	date: 1383544800000,
 	link: "http://goo.cm",
 	info: "mike",
-	clearMe: ""
+	clearMe: "",
+	fieldGroup: ['title1', { link : "http://goo.cm" }]
 }] 
 ```
 
@@ -83,6 +85,7 @@ Enjoy!
 
 ## Changelog
 
+1.0.4  Added the ability to group fields into arrays
 1.0.3  Added the ability to clear and set field by passing an empty string in the map.
 
 ## Credits

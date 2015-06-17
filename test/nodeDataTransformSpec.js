@@ -108,4 +108,29 @@ describe("node-json-transform", function() {
 
     });   
 
+    it("should allow you to map arrays", function(){
+
+    	// Add a map item to  clear out the "clearMe" field.
+    	var newMap = 	{
+    		list : 'posts',
+			item: {
+				fieldGroup: ["title", "description", "blog", "extra"]
+			}
+		};
+
+    	var dataTransform = DataTransform(data, newMap);
+
+		expect(dataTransform.transform()).toEqual([{
+			fieldGroup : [
+				"title1", 
+				"description1", 
+				"This is a blog.", 
+				{
+					link : "http://goo.cm"
+				}
+			]
+		}]);    	
+
+    });
+
 });
