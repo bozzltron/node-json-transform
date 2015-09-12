@@ -30,7 +30,7 @@ var data = {
 				}
 			],
 			clearMe: "text"
-		}	
+		}
 	]
 };
 ```
@@ -55,7 +55,7 @@ var map = {
 	]
 };
 ```
-You can read this as follows: 
+You can read this as follows:
 - Get the array of objects in "posts".
 - Map the name to title, info to description etc.
 - Run Data.parse on the date value
@@ -78,13 +78,14 @@ The expected output.
 	info: "mike",
 	clearMe: "",
 	fieldGroup: ['title1', { link : "http://goo.cm" }]
-}] 
+}]
 ```
 
 Enjoy!
 
 ## Changelog
 
+1.0.5  Accepted pull request from jaymedavis.  You can now pass an array directly and leave 'list' undefined.
 1.0.4  Added the ability to group fields into arrays
 1.0.3  Added the ability to clear and set field by passing an empty string in the map.
 
