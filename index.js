@@ -12,7 +12,7 @@ exports.DataTransform = function(data, map){
 				return "";
 			}
 
-			if(key == '') {
+			if(key == '' || key == undefined) {
 				return obj;
 			}
 
