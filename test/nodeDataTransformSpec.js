@@ -126,7 +126,7 @@ describe("node-json-transform", function() {
 
 	});
 
-	it("should allow you to pass arrays without specifying a list", function() {
+	it("should allow you to pass arrays without specifying 	a list", function() {
 
 		// Add a map item to  clear out the "clearMe" field.
 		var newMap = {
@@ -165,5 +165,24 @@ describe("node-json-transform", function() {
 		}]);
 
 	});
+
+	it("should allow you to use custom functions as operators", function(){
+		var newMap = _.clone(map);
+
+		newMap.operate[{
+			run: function(val){ return val + " more info"}, on: "info"
+		}];
+
+		var dataTransform = DataTransform(data, newMap);
+
+		expect(dataTransform.transform()).toEqual([{
+			name: "title1",
+			info: "description1 more info",
+			text: "This is a blog.",
+			date: 1383544800000,
+			link: "http://goo.cm",
+			info: "mike"
+		}]);
+	})
 
 });

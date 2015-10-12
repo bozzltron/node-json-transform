@@ -51,7 +51,10 @@ var map = {
 		fieldGroup: ['title', 'extra']
 	},
 	operate: [
-		{run: "Date.parse", on: "date"}
+		{
+			run: "Date.parse", on: "date",
+			run: function(val) { return val + " more info"}, on: "info"
+		}
 	]
 };
 ```
@@ -75,7 +78,7 @@ The expected output.
 	text: "This is a blog.",
 	date: 1383544800000,
 	link: "http://goo.cm",
-	info: "mike",
+	info: "mike more info",
 	clearMe: "",
 	fieldGroup: ['title1', { link : "http://goo.cm" }]
 }]
@@ -85,6 +88,7 @@ Enjoy!
 
 ## Changelog
 
+1.0.6  Accepted pull request form ooskapenaar.   You can now use custom functions as operators.
 1.0.5  Accepted pull request from jaymedavis.  You can now pass an array directly and leave 'list' undefined.  
 1.0.4  Added the ability to group fields into arrays  
 1.0.3  Added the ability to clear and set field by passing an empty string in the map.  
