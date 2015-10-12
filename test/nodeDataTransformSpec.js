@@ -47,7 +47,7 @@ describe("node-json-transform", function() {
 
 	it("should extract values", function() {
 
-		var dataTransform = DataTransform(data, map);
+		var dataTransform = DataTransform(_.clone(data), map);
 
 		expect(dataTransform.getValue(data, "posts.0.description")).toEqual("description1");
 
@@ -55,7 +55,7 @@ describe("node-json-transform", function() {
 
 	it("should transform data", function() {
 
-		var dataTransform = DataTransform(data, map);
+		var dataTransform = DataTransform(_.clone(data), map);
 
 		expect(dataTransform.transform()).toEqual([{
 			name: "TITLE1",
@@ -75,7 +75,7 @@ describe("node-json-transform", function() {
 		newMap.item = _.clone(map.item);
 		newMap.item.clearMe = "";
 
-		var dataTransform = DataTransform(data, newMap);
+		var dataTransform = DataTransform(_.clone(data), newMap);
 
 		expect(dataTransform.transform()).toEqual([{
 			name: "TITLE1",
@@ -96,7 +96,7 @@ describe("node-json-transform", function() {
 		newMap.item = _.clone(map.item);
 		newMap.item.fieldThatDoesntExist = "";
 
-		var dataTransform = DataTransform(data, newMap);
+		var dataTransform = DataTransform(_.clone(data), newMap);
 
 		expect(dataTransform.transform()).toEqual([{
 			name: "TITLE1",
@@ -119,7 +119,7 @@ describe("node-json-transform", function() {
 			}
 		};
 
-		var dataTransform = DataTransform(data, newMap);
+		var dataTransform = DataTransform(_.clone(data), newMap);
 
 		expect(dataTransform.transform()).toEqual([{
 			fieldGroup: [
@@ -133,7 +133,7 @@ describe("node-json-transform", function() {
 
 	});
 
-	it("should allow you to pass arrays without specifying 	a list", function() {
+	it("should allow you to pass arrays without specifying a list", function() {
 
 		// Add a map item to  clear out the "clearMe" field.
 		var newMap = {
@@ -159,7 +159,7 @@ describe("node-json-transform", function() {
 			}]
 		}];
 
-		var dataTransform = DataTransform(data, newMap);
+		var dataTransform = DataTransform(_.clone(data), newMap);
 
 		expect(dataTransform.transform()).toEqual([{
 			fieldGroup: [
@@ -176,19 +176,22 @@ describe("node-json-transform", function() {
 	it("should allow you to use custom functions as operators", function(){
 		var newMap = _.clone(map);
 
-		newMap.operate[{
-			run: function(val){ return val + " more info"}, on: "info"
+		newMap.operate = [{
+			run: function (val){ 
+				return val + " more info"; 
+			}, 
+			on: "info"
 		}];
 
 		var dataTransform = DataTransform(data, newMap);
 
-		expect(dataTransform.transform()).toEqual([{
-			name: "title1",
-			info: "description1 more info",
-			text: "This is a blog.",
-			date: 1383544800000,
-			link: "http://goo.cm",
-			info: "mike"
+		var result = dataTransform.transform();
+		expect(result).toEqual([{ 
+			name: 'title1',
+		    info: 'mike more info',
+		    text: 'This is a blog.',
+		    date: '11/4/2013',
+		    link: 'http://goo.cm' 
 		}]);
 	})
 

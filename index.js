@@ -54,7 +54,7 @@ exports.DataTransform = function(data, map){
 			_.each(map.operate, function(method){
 				data = _.map(data, function(item){
 					var fn;
-					if( 'string'===typeof method.run ) {
+					if( 'string' === typeof method.run ) {
 						fn = eval( method.run );
 					} else {
 						fn = method.run;
