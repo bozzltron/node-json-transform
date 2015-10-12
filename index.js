@@ -53,7 +53,12 @@ exports.DataTransform = function(data, map){
 
 			_.each(map.operate, function(method){
 				data = _.map(data, function(item){
-					var fn = eval(method.run);
+					var fn;
+					if( 'string'===typeof method.run ) {
+						fn = eval( method.run );
+					} else {
+						fn = method.run;
+					}
 					item[method.on] = fn(item[method.on]);
 					return item;
 				});

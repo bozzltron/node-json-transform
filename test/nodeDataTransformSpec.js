@@ -33,6 +33,13 @@ var map = {
 	operate: [{
 		run: "Date.parse",
 		on: "date"
+	},{
+		run: function customFn( item ){
+			if( 'string' === typeof item )
+				return item.toUpperCase();
+			return item.toString().toUpperCase();
+		},
+		on: "name"
 	}]
 };
 
@@ -42,7 +49,7 @@ describe("node-json-transform", function() {
 
 		var dataTransform = DataTransform(data, map);
 
-		expect(dataTransform.getValue(data, "posts.0.title")).toEqual("title1");
+		expect(dataTransform.getValue(data, "posts.0.description")).toEqual("description1");
 
 	});
 
@@ -51,7 +58,7 @@ describe("node-json-transform", function() {
 		var dataTransform = DataTransform(data, map);
 
 		expect(dataTransform.transform()).toEqual([{
-			name: "title1",
+			name: "TITLE1",
 			info: "description1",
 			text: "This is a blog.",
 			date: 1383544800000,
@@ -71,7 +78,7 @@ describe("node-json-transform", function() {
 		var dataTransform = DataTransform(data, newMap);
 
 		expect(dataTransform.transform()).toEqual([{
-			name: "title1",
+			name: "TITLE1",
 			info: "description1",
 			text: "This is a blog.",
 			date: 1383544800000,
@@ -92,7 +99,7 @@ describe("node-json-transform", function() {
 		var dataTransform = DataTransform(data, newMap);
 
 		expect(dataTransform.transform()).toEqual([{
-			name: "title1",
+			name: "TITLE1",
 			text: "This is a blog.",
 			date: 1383544800000,
 			link: "http://goo.cm",
