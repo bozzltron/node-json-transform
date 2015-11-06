@@ -3,7 +3,7 @@ var DataTransform = require('../index.js').DataTransform,
 
 var data = {
 	posts: [{
-		title: "title1",
+		title: "uppercase",
 		description: "description1",
 		blog: "This is a blog.",
 		date: "11/4/2013",
@@ -58,7 +58,7 @@ describe("node-json-transform", function() {
 		var dataTransform = DataTransform(data, map);
 
 		expect(dataTransform.transform()).toEqual([{
-			name: "TITLE1",
+			name: "UPPERCASE",
 			info: "description1",
 			text: "This is a blog.",
 			date: 1383544800000,
@@ -78,7 +78,7 @@ describe("node-json-transform", function() {
 		var dataTransform = DataTransform(data, newMap);
 
 		expect(dataTransform.transform()).toEqual([{
-			name: "TITLE1",
+			name: "UPPERCASE",
 			info: "description1",
 			text: "This is a blog.",
 			date: 1383544800000,
@@ -89,29 +89,30 @@ describe("node-json-transform", function() {
 
 	});
 
-	it("should allow you to set fields", function() {
+	it("should allow you to set constant values in new fields", function() {
 
-		// Add a map item to  clear out the "clearMe" field.
+		// Add a map item to set a new field that is filled with a const str value.
 		var newMap = _.clone(map);
 		newMap.item = _.clone(map.item);
-		newMap.item.fieldThatDoesntExist = "";
+		newMap.item.constantField = "{DEFAULT_STATUS}";
 
 		var dataTransform = DataTransform(data, newMap);
 
 		expect(dataTransform.transform()).toEqual([{
-			name: "TITLE1",
+			name: "UPPERCASE",
+			info: "description1",
 			text: "This is a blog.",
 			date: 1383544800000,
 			link: "http://goo.cm",
 			info: "mike",
-			fieldThatDoesntExist: ""
+			constantField: "DEFAULT_STATUS"
 		}]);
 
 	});
 
 	it("should allow you to map arrays", function() {
 
-		// Add a map item to  clear out the "clearMe" field.
+		// reconfigure 'posts' to demonstrate a fieldgroup
 		var newMap = {
 			list: 'posts',
 			item: {
@@ -123,7 +124,7 @@ describe("node-json-transform", function() {
 
 		expect(dataTransform.transform()).toEqual([{
 			fieldGroup: [
-				"title1",
+				"uppercase",
 				"description1",
 				"This is a blog.", {
 					link: "http://goo.cm"
@@ -143,7 +144,7 @@ describe("node-json-transform", function() {
 		};
 
 		var data = [{
-			title: "title1",
+			title: "uppercase",
 			description: "description1",
 			blog: "This is a blog.",
 			date: "11/4/2013",
@@ -163,7 +164,7 @@ describe("node-json-transform", function() {
 
 		expect(dataTransform.transform()).toEqual([{
 			fieldGroup: [
-				"title1",
+				"uppercase",
 				"description1",
 				"This is a blog.", {
 					link: "http://goo.cm"
