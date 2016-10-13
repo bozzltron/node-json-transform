@@ -37,13 +37,18 @@ exports.DataTransform = function(data, map){
 
 		},
 
+		getList: function(){
+			return this.getValue(data, map.list);
+		},
+
 		transform : function() {
 
 			var value = this.getValue(data, map.list),
 			    normalized = {};
 			if(value) {
-				var normalized = _.map(this.getValue(data, map.list), _.bind(this.iterator, this));
+				var normalized = _.map(this.getList(), _.bind(this.iterator, this));
 				normalized = this.operate(normalized);
+				normalized = this.each(normalized);
 			}
 		    return normalized;
 
@@ -67,6 +72,10 @@ exports.DataTransform = function(data, map){
 
 		},
 
+		each: function(data){
+			return map.each ? _.each(this.getList(), map.each) : data;
+		},
+
 		iterator : function(item) {
 
 			var obj = {};
@@ -84,6 +93,7 @@ exports.DataTransform = function(data, map){
 				} else {
 					obj[newkey] = "";
 				}	
+
 			}, this));
 			return obj;
 

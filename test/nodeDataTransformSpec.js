@@ -225,4 +225,33 @@ describe("node-json-transform", function() {
 		}]);
 	})
 
+
+	it("should allow each function to run on all items", function(){
+		
+		var data = {
+			posts: [
+				{name: "peter"},
+				{name: "paul"},
+				{name: "marry"}
+			]
+		};
+
+		var map = {
+			list: 'posts',
+			each: function(item){
+				item.iterated = true;
+				return item;
+			}
+		};
+
+		var dataTransform = DataTransform(data, map);
+
+		var result = dataTransform.transform();
+		expect(result).toEqual([
+			{name: "peter", iterated: true},
+			{name: "paul", iterated: true},
+			{name: "marry", iterated: true}
+		]);
+	})
+
 });

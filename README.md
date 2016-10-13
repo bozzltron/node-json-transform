@@ -57,13 +57,20 @@ var map = {
 		{
 			run: function(val) { return val + " more info"}, on: "info"
 		}
-	]
+	],
+	each: function(item){
+		// make changes
+		item.iterated = true;
+		return item;
+	}
+}
 };
 ```
 You can read this as follows:
 - Get the array of objects in "posts".
 - Map the name to title, info to description etc.
-- Run Data.parse on the date value
+- Run Data.parse on the date value.
+- Run each function on all items after mapping and operations.
 
 Run it
 ```javascript
@@ -82,7 +89,8 @@ The expected output.
 	link: "http://goo.cm",
 	info: "mike more info",
 	clearMe: "",
-	fieldGroup: ['title1', { link : "http://goo.cm" }]
+	fieldGroup: ['title1', { link : "http://goo.cm" }],
+	iterated: true
 }]
 ```
 
