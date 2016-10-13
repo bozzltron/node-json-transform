@@ -52,7 +52,9 @@ var map = {
 	},
 	operate: [
 		{
-			run: "Date.parse", on: "date",
+			run: "Date.parse", on: "date"
+		},
+		{
 			run: function(val) { return val + " more info"}, on: "info"
 		}
 	]

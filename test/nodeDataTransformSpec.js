@@ -195,4 +195,34 @@ describe("node-json-transform", function() {
 		}]);
 	})
 
+	it("should allow multiple operators", function(){
+		var newMap = _.clone(map);
+
+		newMap.operate = [
+			{
+				run: function (val){ 
+					return val + " more info"; 
+				}, 
+				on: "info"
+			},
+			{
+				run: function (val){ 
+					return val + " more text"; 
+				}, 
+				on: "text"
+			}
+		];
+
+		var dataTransform = DataTransform(data, newMap);
+
+		var result = dataTransform.transform();
+		expect(result).toEqual([{ 
+			name: 'title1',
+		    info: 'mike more info',
+		    text: 'This is a blog. more text',
+		    date: '11/4/2013',
+		    link: 'http://goo.cm' 
+		}]);
+	})
+
 });
