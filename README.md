@@ -97,6 +97,7 @@ The expected output.
 Enjoy!
 
 ## Changelog
+1.0.10 Make each compatible with other options.
 1.0.9  Updated the changelog.
 1.0.8  Added each functionality to the map.
 1.0.7  Updated Readme for multiple operations.
