@@ -1,6 +1,6 @@
 // DataTransform
 
-var _ = require('underscore');
+var _ = require('lodash');
 
 exports.DataTransform = function(data, map){
 
@@ -46,7 +46,8 @@ exports.DataTransform = function(data, map){
 			var value = this.getValue(data, map.list),
 			    normalized = {};
 			if(value) {
-				var normalized = _.map(this.getList(), _.bind(this.iterator, this));
+				var list = this.getList();
+				var normalized = map.item ? _.map(list, _.bind(this.iterator, this)) : list;
 				normalized = this.operate(normalized);
 				normalized = this.each(normalized);
 			}
@@ -56,24 +57,29 @@ exports.DataTransform = function(data, map){
 
 		operate: function(data) {
 
-			_.each(map.operate, function(method){
-				data = _.map(data, function(item){
-					var fn;
-					if( 'string' === typeof method.run ) {
-						fn = eval( method.run );
-					} else {
-						fn = method.run;
-					}
-					item[method.on] = fn(item[method.on]);
-					return item;
+			if(map.operate) {
+				_.each(map.operate, function(method){
+					data = _.map(data, function(item){
+						var fn;
+						if( 'string' === typeof method.run ) {
+							fn = eval( method.run );
+						} else {
+							fn = method.run;
+						}
+						item[method.on] = fn(item[method.on]);
+						return item;
+					});
 				});
-			});
+			}
 			return data;
 
 		},
 
 		each: function(data){
-			return map.each ? _.each(this.getList(), map.each) : data;
+			if( map.each ) {
+				_.each(data, map.each);
+			}  
+			return data;
 		},
 
 		iterator : function(item) {

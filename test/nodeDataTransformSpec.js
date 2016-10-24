@@ -252,6 +252,40 @@ describe("node-json-transform", function() {
 			{name: "paul", iterated: true},
 			{name: "marry", iterated: true}
 		]);
-	})
+
+	});
+
+
+	it("should be able to combine mapping with each", function(){
+		
+		var data = {
+			posts: [
+				{name: "peter"},
+				{name: "paul"},
+				{name: "marry"}
+			]
+		};
+
+		var map = {
+			list: 'posts',
+			item: {
+				title: 'name',
+			},
+			each: function(item){
+				item.iterated = true;
+				return item;
+			}
+		};
+
+		var dataTransform = DataTransform(data, map);
+
+		var result = dataTransform.transform();
+		expect(result).toEqual([
+			{title: "peter", iterated: true},
+			{title: "paul", iterated: true},
+			{title: "marry", iterated: true}
+		]);
+
+	});
 
 });
