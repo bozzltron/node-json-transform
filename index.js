@@ -2,6 +2,23 @@
 
 var _ = require('lodash');
 
+/**
+ * Tests whether an "old key" is actually a constant value that must
+ * always be inserted.
+ *
+ * The syntax is: "{constant_value}"
+ *
+ * @method isConstKey
+ * @param str
+ * @return either the 'constant_value' is returned or undefined
+ */
+function isConstKey(str) {
+	var cOp = /^{(.*)}$/.exec(str);
+	if(cOp) {
+		return cOp[1];
+	}
+}
+
 exports.DataTransform = function(data, map){
 
 	return {
@@ -86,10 +103,15 @@ exports.DataTransform = function(data, map){
 
 			var obj = {};
 			_.each(map.item, _.bind(function(oldkey, newkey) {
+				var cnst;
 				if(typeof(oldkey) == "string" && oldkey.length > 0) {
-					obj[newkey] = this.getValue(item, oldkey);
+					cnst = isConstKey(oldkey);
+					if( cnst ) {
+						obj[newkey] = cnst;
+					} else {
+						obj[newkey] = this.getValue(item, oldkey);
+					}
 				} else if( _.isArray(oldkey) ) {
-					
 					var array = [];
 					_.each(oldkey, _.bind(function(key){
 						array.push(this.getValue(item, key));
