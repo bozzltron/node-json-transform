@@ -37,6 +37,36 @@ exports.DataTransform = function(data, map){
 
 		},
 
+		setValue : function(obj, key, newValue) {
+
+			if(typeof(obj) == "undefined") {
+				return;
+			}
+
+			if(key == '' || key == undefined) {
+				return;
+			}
+
+			var value = obj || data,
+				key = key || map.list,
+				keys = null;
+			if(key == "") {
+				return;
+			} 
+
+			keys = key.split('.');
+			let target = null;
+			for(var i = 0; i < keys.length; i++ ) {
+				if(value !== "undefined" && value[keys[i]]) {
+					target = value;
+					value = value[keys[i]];
+				} else{
+					return;
+				}
+			}
+			target[keys[i-1]] = newValue;
+		},
+
 		getList: function(){
 			return this.getValue(data, map.list);
 		},
@@ -47,8 +77,8 @@ exports.DataTransform = function(data, map){
 			    normalized = {};
 			if(value) {
 				var list = this.getList();
-				var normalized = map.item ? _.map(list, _.bind(this.iterator, this)) : list;
-				normalized = this.operate(normalized);
+				var normalized = map.item ? _.map(list, _.bind(this.iterator, this, map.item)) : list;
+				normalized = _.bind(this.operate, this, normalized)();
 				normalized = this.each(normalized);
 			}
 		    return normalized;
@@ -58,18 +88,18 @@ exports.DataTransform = function(data, map){
 		operate: function(data) {
 
 			if(map.operate) {
-				_.each(map.operate, function(method){
-					data = _.map(data, function(item){
+				_.each(map.operate, _.bind(function(method){
+					data = _.map(data, _.bind(function(item){
 						var fn;
 						if( 'string' === typeof method.run ) {
 							fn = eval( method.run );
 						} else {
 							fn = method.run;
 						}
-						item[method.on] = fn(item[method.on]);
+						this.setValue(item,method.on,fn(this.getValue(item,method.on)))
 						return item;
-					});
-				});
+					},this));
+				},this));
 			}
 			return data;
 
@@ -82,21 +112,25 @@ exports.DataTransform = function(data, map){
 			return data;
 		},
 
-		iterator : function(item) {
+		iterator : function(map, item) {
 
 			var obj = {};
-			_.each(map.item, _.bind(function(oldkey, newkey) {
+
+			//to support simple arrays with recursion
+			if(typeof(map) == "string") {
+				return this.getValue(item, map);
+			}
+			_.each(map, _.bind(function(oldkey, newkey) {
 				if(typeof(oldkey) == "string" && oldkey.length > 0) {
 					obj[newkey] = this.getValue(item, oldkey);
 				} else if( _.isArray(oldkey) ) {
-					
-					var array = [];
-					_.each(oldkey, _.bind(function(key){
-						array.push(this.getValue(item, key));
-					},this));
+					array = _.map(oldkey, _.bind(function(item,map) {return this.iterator(map,item)}, this , item));//need to swap arguments for bind
 					obj[newkey] = array;
-					
-				} else {
+				}  else if(typeof oldkey == 'object'){
+					let bound = _.bind(this.iterator, this, oldkey,item)
+					obj[newkey] = bound();
+				}
+				else {
 					obj[newkey] = "";
 				}	
 
