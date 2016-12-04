@@ -47,24 +47,21 @@ exports.DataTransform = function(data, map){
 				return;
 			}
 
-			var value = obj || data,
-				key = key || map.list,
-				keys = null;
 			if(key == "") {
 				return;
 			} 
-
+			
 			keys = key.split('.');
-			let target = null;
+			var target = obj;
 			for(var i = 0; i < keys.length; i++ ) {
-				if(value !== "undefined" && value[keys[i]]) {
-					target = value;
-					value = value[keys[i]];
-				} else{
+				if(i == keys.length-1){
+					target[keys[i]] = newValue;
 					return;
 				}
+				if(keys[i] in target)
+					target = target[keys[i]];
+				else return;
 			}
-			target[keys[i-1]] = newValue;
 		},
 
 		getList: function(){

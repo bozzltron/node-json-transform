@@ -7,6 +7,7 @@ let map = {
 		id: 'id',
 		sku: 'sku',
 		toReplace: 'sku',
+		errorReplace: 'notFound',
 		simpleArray: ['id', 'sku','sku'],
 		complexArray: [{node: 'id'},{otherNode:'sku'},{toReplace:'sku'}],
 		subObject: {
@@ -21,6 +22,10 @@ let map = {
 	operate: [{
 		run: (val)=>'replacement',
 		on: 'subObject.subSubObject.node1'
+	},
+	{
+		run: (val)=>'replacement',
+		on: 'errorReplace'
 	},
 	{
 		run: (val)=>'replacement',
