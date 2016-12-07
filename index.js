@@ -25,7 +25,7 @@ exports.DataTransform = function(data, map){
 				keys = key.split('.');
 				for(var i = 0; i < keys.length; i++ ) {
 					if(typeof(value) !== "undefined" && 
-						value[keys[i]]) {
+						keys[i] in value) {
 						value = value[keys[i]];
 					} else {
 						return null;

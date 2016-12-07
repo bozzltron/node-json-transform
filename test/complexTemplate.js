@@ -6,6 +6,7 @@ let map = {
 	item: {
 		id: 'id',
 		sku: 'sku',
+		zero: 'zero',
 		toReplace: 'sku',
 		errorReplace: 'notFound',
 		simpleArray: ['id', 'sku','sku'],
@@ -44,6 +45,7 @@ let map = {
 let object ={
 	items:[{
 	id: 'books',
+	zero: 0,
 	sku:'10234-12312'
 	}]
 }
