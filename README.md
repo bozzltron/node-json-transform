@@ -154,6 +154,7 @@ var object = {
 		}
 	]
 };
+
 var result = DataTransform(data, map).transform();
 ```
 
@@ -197,6 +198,7 @@ The expected output.
 ###Multi-template Example
 
 ```
+var data = {
     products: [{
         id: 'books0',
         zero: 0,
@@ -240,6 +242,7 @@ var nestedMap = {
 		'mysubsku': 'subsku'
 	}
 };
+
 var result = DataTransform(data, baseMap).transform();
 ```
 
