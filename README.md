@@ -272,6 +272,7 @@ The expected output.
 Enjoy!
 
 ## Changelog
+1.0.13 Update code examples.
 1.0.12 Fixed readme formatting.
 1.0.11 Adding support for next object and nested array references.
 1.0.10 Make each compatible with other options.
