@@ -124,7 +124,7 @@ exports.DataTransform = function(data, map){
 					array = _.map(oldkey, _.bind(function(item,map) {return this.iterator(map,item)}, this , item));//need to swap arguments for bind
 					obj[newkey] = array;
 				}  else if(typeof oldkey == 'object'){
-					let bound = _.bind(this.iterator, this, oldkey,item)
+					var bound = _.bind(this.iterator, this, oldkey,item)
 					obj[newkey] = bound();
 				}
 				else {

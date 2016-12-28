@@ -1,6 +1,8 @@
 # node-data-transform
 
-Usage
+##Usage
+
+###Basic Example
 
 ```javascript
 var DataTransform = require("node-json-transform").DataTransform,
@@ -81,22 +83,193 @@ console.log(result);
 
 The expected output.
 ```javascript
-[{
-	name : "title1",
-	info: "description1",
-	text: "This is a blog.",
-	date: 1383544800000,
-	link: "http://goo.cm",
-	info: "mike more info",
-	clearMe: "",
-	fieldGroup: ['title1', { link : "http://goo.cm" }],
-	iterated: true
-}]
+[
+	{
+		name : "title1",
+		info: "description1",
+		text: "This is a blog.",
+		date: 1383544800000,
+		link: "http://goo.cm",
+		info: "mike more info",
+		clearMe: "",
+		fieldGroup: ['title1', { link : "http://goo.cm" }],
+		iterated: true
+	}
+]
 ```
+
+
+###Advanced Example
+
+'''
+var map = {
+	list: 'items',
+	item: {
+		id: 'id',
+		sku: 'sku',
+		zero: 'zero',
+		toReplace: 'sku',
+		errorReplace: 'notFound',
+		simpleArray: ['id', 'sku','sku'],
+		complexArray: [ {node: 'id'} , { otherNode:'sku' } , {toReplace:'sku'} ],
+		subObject: {
+			node1: 'id',
+			node2: 'sku',
+			subSubObject: {
+				node1: 'id',
+				node2: 'sku',
+			}
+		}
+	},
+	operate: [
+		{
+			run: (val) => 'replacement',
+			on: 'subObject.subSubObject.node1'
+		},
+		{
+			run: (val) => 'replacement',
+			on: 'errorReplace'
+		},
+		{
+			run: (val) => 'replacement',
+			on: 'toReplace'
+		},
+			{
+			run: (val) => 'replacement',
+			on: 'simpleArray.2'
+		},
+		{
+			run: (val) => 'replacement',
+			on: 'complexArray.2.toReplace'
+		}
+	]
+};
+
+var object = {
+	items:[
+		{
+			id: 'books',
+			zero: 0,
+			sku:'10234-12312'
+		}
+	]
+};
+var result = DataTransform(data, map).transform();
+'''
+
+The expected output.
+'''
+[
+	{
+	    "id": "books",
+	    "sku": "10234-12312",
+	    "zero": 0,
+	    "toReplace": "replacement",
+	    "errorReplace": "replacement",
+	    "simpleArray": [
+	        "books",
+	        "10234-12312",
+	        "replacement"
+	    ],
+	    "complexArray": [
+	        {
+	            "node": "books"
+	        },
+	        {
+	            "otherNode": "10234-12312"
+	        },
+	        {
+	            "toReplace": "replacement"
+	        }
+	    ],
+	    "subObject": {
+	        "node1": "books",
+	        "node2": "10234-12312",
+	        "subSubObject": {
+	            "node1": "replacement",
+	            "node2": "10234-12312"
+	        }
+	    }
+	}
+]
+'''
+
+###Multi-template Example
+
+'''
+    products: [{
+        id: 'books0',
+        zero: 0,
+        sku: '00234-12312',
+        subitems: [
+            { subid: "0.0", subsku: "subskuvalue0.0" },
+            { subid: "0.1", subsku: "subskuvalue0.1" }
+        ]
+    }, {
+        id: 'books1',
+        zero: 1,
+        sku: '10234-12312',
+        subitems: [
+            { subid: "1.0", subsku: "subskuvalue1.0" },
+            { subid: "1.1", subsku: "subskuvalue1.1" }
+        ]
+    }]
+};
+
+var baseMap = {
+	'list': 'products',
+	'item' : {
+		'myid': 'id',
+		'mysku': 'sku',
+		'mysubitems': 'subitems'
+	},
+    operate: [
+        {
+            'run': function(ary) { 
+            	return DataTransform({list:ary}, nestedMap).transform();
+            }, 
+            'on': 'mysubitems'
+        }
+    ]
+};
+
+var nestedMap = {
+	'list': 'list',
+	'item' : {
+		'mysubid': 'subid',
+		'mysubsku': 'subsku'
+	}
+};
+var result = DataTransform(data, baseMap).transform();
+'''
+
+The expected output.
+
+'''
+[
+	{
+	    "myid": "books0",
+	    "mysku": "00234-12312",
+	    "mysubitems": [
+	    	{ "mysubid": "0.0", "mysubsku": "subskuvalue0.0" }, 
+	    	{ "mysubid": "0.1", "mysubsku": "subskuvalue0.1"}
+	    ]
+	}, 
+	{
+	    "myid": "books1",
+	    "mysku": "10234-12312",
+	    "mysubitems": [
+	    	{ "mysubid": "1.0", "mysubsku": "subskuvalue1.0" }, 
+	    	{ "mysubid": "1.1", "mysubsku": "subskuvalue1.1" }
+	    ]
+	}
+]
+'''
 
 Enjoy!
 
 ## Changelog
+1.0.11 Adding support for next object and nested array references.
 1.0.10 Make each compatible with other options.
 1.0.9  Updated the changelog.
 1.0.8  Added each functionality to the map.

@@ -1,5 +1,5 @@
 var DataTransform = require('../index.js').DataTransform,
-	_ = require("underscore");
+	_ = require("lodash");
 
 var data = {
 	posts: [{
