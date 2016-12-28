@@ -101,7 +101,7 @@ The expected output.
 
 ###Advanced Example
 
-'''
+```
 var map = {
 	list: 'items',
 	item: {
@@ -155,10 +155,10 @@ var object = {
 	]
 };
 var result = DataTransform(data, map).transform();
-'''
+```
 
 The expected output.
-'''
+```
 [
 	{
 	    "id": "books",
@@ -192,11 +192,11 @@ The expected output.
 	    }
 	}
 ]
-'''
+```
 
 ###Multi-template Example
 
-'''
+```
     products: [{
         id: 'books0',
         zero: 0,
@@ -241,11 +241,11 @@ var nestedMap = {
 	}
 };
 var result = DataTransform(data, baseMap).transform();
-'''
+```
 
 The expected output.
 
-'''
+```
 [
 	{
 	    "myid": "books0",
@@ -264,11 +264,12 @@ The expected output.
 	    ]
 	}
 ]
-'''
+```
 
 Enjoy!
 
 ## Changelog
+1.0.12 Fixed readme formatting.
 1.0.11 Adding support for next object and nested array references.
 1.0.10 Make each compatible with other options.
 1.0.9  Updated the changelog.
