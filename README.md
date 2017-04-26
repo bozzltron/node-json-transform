@@ -269,6 +269,48 @@ The expected output.
 ]
 ```
 
+# Static value
+if you want to add static value in map, $$ as prefix of key
+
+##example 
+### map
+    var map = {
+        list : 'profiles',
+        item: {
+    		fullName : "name",
+    		email : [{
+    			"Type" : "$$Primary",
+    			"Value" : "email"
+    		}],
+    		id : "id"
+    	}
+    }
+
+### data
+
+    var data = {
+    			profiles : [
+    				{
+    				     id : "235235235",
+    				     name :  "Govind Kumar"
+    				     "email" : "mymailid@example.com"
+    				}
+    			]
+    };
+
+### output
+
+    var result = [
+    	{
+        		fullName : "Govind Kumar",
+        		email : [{
+        			"Type" : "Primary",
+        			"Value" : "mymailid@example.com"
+        		}],
+        		id : "235235235"
+        }
+    ]
+
 Enjoy!
 
 ## Changelog
