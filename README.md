@@ -1,8 +1,8 @@
 # node-data-transform
 
-##Usage
+## Usage
 
-###Basic Example
+### Basic Example
 
 ```javascript
 var DataTransform = require("node-json-transform").DataTransform,
@@ -99,7 +99,7 @@ The expected output.
 ```
 
 
-###Advanced Example
+### Advanced Example
 
 ```
 var map = {
@@ -195,7 +195,7 @@ The expected output.
 ]
 ```
 
-###Multi-template Example
+### Multi-template Example
 
 ```
 var data = {
