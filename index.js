@@ -6,10 +6,19 @@ exports.DataTransform = function(data, map){
 
 	return {
 
-		getValue : function(obj, key) {
+		defaultOrNull: function(key) {
+			console.log("Use default!");
+			let value =  key && map.defaults ? map.defaults[key] : null;
+			console.log("default",  map.defaults);
+			console.log("key",  key);
+			console.log("value", value);
+			return value;
+		},
+
+		getValue : function(obj, key, newKey) {
 
 			if(typeof(obj) == "undefined") {
-				return "";
+				return;
 			}
 
 			if(key == '' || key == undefined) {
@@ -28,7 +37,7 @@ exports.DataTransform = function(data, map){
 						keys[i] in value) {
 						value = value[keys[i]];
 					} else {
-						return null;
+						return this.defaultOrNull(newKey);
 					}
 				}
 			}
@@ -71,15 +80,27 @@ exports.DataTransform = function(data, map){
 		transform : function() {
 
 			var value = this.getValue(data, map.list),
-			    normalized = {};
+					normalized = {};
+					
 			if(value) {
 				var list = this.getList();
 				var normalized = map.item ? _.map(list, _.bind(this.iterator, this, map.item)) : list;
 				normalized = _.bind(this.operate, this, normalized)();
 				normalized = this.each(normalized);
+				normalized = _.each(normalized, this.remove);
 			}
-		    return normalized;
+			
+			return normalized;
 
+		},
+
+		remove: function(item){
+			if( _.isArray(map.remove) ) {
+				_.each(map.remove, (key)=>{
+					delete item[key];
+				});
+			}  
+			return item;
 		},
 
 		operate: function(data) {
@@ -119,7 +140,7 @@ exports.DataTransform = function(data, map){
 			}
 			_.each(map, _.bind(function(oldkey, newkey) {
 				if(typeof(oldkey) == "string" && oldkey.length > 0) {
-					obj[newkey] = this.getValue(item, oldkey);
+					obj[newkey] = this.getValue(item, oldkey, newkey);
 				} else if( _.isArray(oldkey) ) {
 					array = _.map(oldkey, _.bind(function(item,map) {return this.iterator(map,item)}, this , item));//need to swap arguments for bind
 					obj[newkey] = array;

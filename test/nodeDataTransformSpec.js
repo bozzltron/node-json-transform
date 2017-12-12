@@ -255,7 +255,6 @@ describe("node-json-transform", function() {
 
 	});
 
-
 	it("should be able to combine mapping with each", function(){
 		
 		var data = {
@@ -284,6 +283,66 @@ describe("node-json-transform", function() {
 			{title: "peter", iterated: true},
 			{title: "paul", iterated: true},
 			{title: "marry", iterated: true}
+		]);
+
+	});
+
+	it("should delete attributes", function(){
+		
+		var data = {
+			posts: [
+				{name: "peter", unwanted: true},
+				{name: "paul", unwanted: true},
+				{name: "marry", unwanted: true}
+			]
+		};
+
+		var map = {
+			list: 'posts',
+			remove: ['unwanted']
+		};
+
+		var dataTransform = DataTransform(data, map);
+
+		var result = dataTransform.transform();
+
+		expect(result).toEqual([
+			{name: "peter"},
+			{name: "paul"},
+			{name: "marry"}
+		]);
+
+	});
+
+	it("should use default attributes for missing data", function(){
+		
+		var data = {
+			posts: [
+				{name: "peter", valid: true},
+				{name: "paul", valid: true},
+				{name: "marry"}
+			]
+		};
+
+		var map = {
+			list: 'posts',
+			item: {
+				verified: 'valid',
+				name: 'name'
+			},
+			defaults: {
+				verified: false
+			}
+		};
+
+		var dataTransform = DataTransform(data, map);
+
+		var result = dataTransform.transform();
+
+		expect(result).toEqual([
+			{name: "peter", verified:true},
+			{name: "paul", verified:true},
+			{name: "marry", verified:false}
 		]);
 
 	});

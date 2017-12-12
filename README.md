@@ -119,7 +119,11 @@ var map = {
 				node1: 'id',
 				node2: 'sku',
 			}
-		}
+		},
+		remove: ['unwanted']
+	},
+	defaults: {
+		"missingData": true
 	},
 	operate: [
 		{
@@ -150,7 +154,8 @@ var object = {
 		{
 			id: 'books',
 			zero: 0,
-			sku:'10234-12312'
+			sku:'10234-12312',
+			unwanted: true
 		}
 	]
 };
@@ -190,7 +195,8 @@ The expected output.
 	            "node1": "replacement",
 	            "node2": "10234-12312"
 	        }
-	    }
+	    },
+		"missingData": true
 	}
 ]
 ```
@@ -272,6 +278,7 @@ The expected output.
 Enjoy!
 
 ## Changelog
+1.0.14 Add support for default values via "defaults" definition.  Add support for removing attributes via the "remove" definition.
 1.0.13 Update code examples.
 1.0.12 Fixed readme formatting.
 1.0.11 Adding support for next object and nested array references.
