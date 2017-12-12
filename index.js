@@ -30,7 +30,10 @@ exports.DataTransform = function(data, map){
 				keys = null;
 			if(key == "") {
 				value = "";
-			} else {
+			} else if(key.indexOf("$$") == 0) {
+				value = key.replace("$$",'');
+			}
+			else {
 				keys = key.split('.');
 				for(var i = 0; i < keys.length; i++ ) {
 					if(typeof(value) !== "undefined" && 
