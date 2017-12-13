@@ -7,12 +7,7 @@ exports.DataTransform = function(data, map){
 	return {
 
 		defaultOrNull: function(key) {
-			console.log("Use default!");
-			let value =  key && map.defaults ? map.defaults[key] : null;
-			console.log("default",  map.defaults);
-			console.log("key",  key);
-			console.log("value", value);
-			return value;
+			return key && map.defaults ? map.defaults[key] : null;
 		},
 
 		getValue : function(obj, key, newKey) {
