@@ -61,7 +61,7 @@ describe("node-json-transform", function() {
 			name: "TITLE1",
 			info: "description1",
 			text: "This is a blog.",
-			date: 1383544800000,
+			date: Date.parse('11/4/2013'),
 			link: "http://goo.cm",
 			info: "mike"
 		}]);
@@ -81,7 +81,7 @@ describe("node-json-transform", function() {
 			name: "TITLE1",
 			info: "description1",
 			text: "This is a blog.",
-			date: 1383544800000,
+			date: Date.parse('11/4/2013'),
 			link: "http://goo.cm",
 			info: "mike",
 			clearMe: ""
@@ -101,7 +101,7 @@ describe("node-json-transform", function() {
 		expect(dataTransform.transform()).toEqual([{
 			name: "TITLE1",
 			text: "This is a blog.",
-			date: 1383544800000,
+			date: Date.parse('11/4/2013'),
 			link: "http://goo.cm",
 			info: "mike",
 			fieldThatDoesntExist: ""

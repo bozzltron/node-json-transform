@@ -72,7 +72,7 @@ exports.DataTransform = function(data, map){
 			return this.getValue(data, map.list);
 		},
 
-		transform : function() {
+		transform : function(context) {
 
 			var value = this.getValue(data, map.list),
 					normalized = {};
@@ -80,25 +80,30 @@ exports.DataTransform = function(data, map){
 			if(value) {
 				var list = this.getList();
 				var normalized = map.item ? _.map(list, _.bind(this.iterator, this, map.item)) : list;
-				normalized = _.bind(this.operate, this, normalized)();
-				normalized = this.each(normalized);
-				normalized = _.each(normalized, this.remove);
+				normalized = _.bind(this.operate, this, normalized)(context);
+				normalized = this.each(normalized, context);
+				normalized = this.removeAll(normalized);
 			}
 			
 			return normalized;
 
 		},
 
+		removeAll: function(data){
+      if (_.isArray(map.remove)) {
+        return _.each(data, this.remove)
+      }
+			return data;
+		},
+
 		remove: function(item){
-			if( _.isArray(map.remove) ) {
-				_.each(map.remove, (key)=>{
-					delete item[key];
-				});
-			}  
+			_.each(map.remove, (key)=>{
+				delete item[key];
+			});
 			return item;
 		},
 
-		operate: function(data) {
+		operate: function(data, context) {
 
 			if(map.operate) {
 				_.each(map.operate, _.bind(function(method){
@@ -109,7 +114,7 @@ exports.DataTransform = function(data, map){
 						} else {
 							fn = method.run;
 						}
-						this.setValue(item,method.on,fn(this.getValue(item,method.on)))
+						this.setValue(item,method.on,fn(this.getValue(item,method.on), context))
 						return item;
 					},this));
 				},this));
@@ -118,9 +123,9 @@ exports.DataTransform = function(data, map){
 
 		},
 
-		each: function(data){
+		each: function(data, context){
 			if( map.each ) {
-				_.each(data, map.each);
+				_.each(data, (value, index, collection) => map.each(value, index, collection, context));
 			}  
 			return data;
 		},
