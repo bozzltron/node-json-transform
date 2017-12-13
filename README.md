@@ -275,9 +275,72 @@ The expected output.
 ]
 ```
 
+### Context Example
+
+```javascript
+  var DataTransform = require("node-json-transform").DataTransform;
+```
+
+First we need some data.
+
+```javascript
+    var data = {
+        posts : [
+            {
+                title : "title1",
+                description: "description1"
+            }
+        ]
+    };
+```
+
+The map defines how the output will be structured and which operations to run.
+
+```javascript
+    var map = {
+        list : 'posts',
+        item: {
+            name: "title",
+            info: "description"
+        },
+        operate: [
+            {
+                run: function(val, context) { return val + " more info for" + context.type},
+                on: "info"
+            }
+        ],
+        each: function(item, index, collection, context){
+            // make changes
+            item.type = context.type;
+            return item;
+        }
+    };
+```
+
+Run it
+```javascript
+    var dataTransform = DataTransform(data, map);
+    var context = { type: 'my-type' };
+    var result = dataTransform.transform(context);
+    console.log(result);
+```
+
+The expected output.
+```javascript
+    [
+        {
+            name : "title1",
+            info: "description1 more info for my-type",
+            type: 'my-type'
+        }
+    ]
+```
+
+
 Enjoy!
 
 ## Changelog
+1.0.15 Add support for a context object that is passed through to the operate.run and each functions.
 1.0.14 Add support for default values via "defaults" definition.  Add support for removing attributes via the "remove" definition.
 1.0.13 Update code examples.
 1.0.12 Fixed readme formatting.
