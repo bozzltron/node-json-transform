@@ -340,17 +340,18 @@ The expected output.
 Enjoy!
 
 ## Changelog
-1.0.15 Add support for a context object that is passed through to the operate.run and each functions.
-1.0.14 Add support for default values via "defaults" definition.  Add support for removing attributes via the "remove" definition.
-1.0.13 Update code examples.
-1.0.12 Fixed readme formatting.
-1.0.11 Adding support for next object and nested array references.
-1.0.10 Make each compatible with other options.
-1.0.9  Updated the changelog.
-1.0.8  Added each functionality to the map.
-1.0.7  Updated Readme for multiple operations.
-1.0.6  Accepted pull request form ooskapenaar.   You can now use custom functions as operators.
-1.0.5  Accepted pull request from jaymedavis.  You can now pass an array directly and leave 'list' undefined.  
+1.0.16 ES5 compatibility
+1.0.15 Add support for a context object that is passed through to the operate.run and each functions.  
+1.0.14 Add support for default values via "defaults" definition.  Add support for removing attributes via the "remove" definition.  
+1.0.13 Update code examples.  
+1.0.12 Fixed readme formatting.  
+1.0.11 Adding support for next object and nested array references.  
+1.0.10 Make each compatible with other options.  
+1.0.9  Updated the changelog.  
+1.0.8  Added each functionality to the map.  
+1.0.7  Updated Readme for multiple operations.  
+1.0.6  Accepted pull request form ooskapenaar.   You can now use custom functions as operators.  
+1.0.5  Accepted pull request from jaymedavis.  You can now pass an array directly and leave 'list' undefined.   
 1.0.4  Added the ability to group fields into arrays  
 1.0.3  Added the ability to clear and set field by passing an empty string in the map.  
 

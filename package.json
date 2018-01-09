@@ -1,6 +1,6 @@
 {
   "name": "node-json-transform",
-  "version": "1.0.15",
+  "version": "1.0.16",
   "description": "A node module for transforming and performing operations on JSON.",
   "main": "index.js",
   "scripts": {
@@ -22,7 +22,7 @@
   },
   "homepage": "https://github.com/bozzltron/node-json-transform",
   "dependencies": {
-    "lodash": "^4.16.4"
+    "lodash": "^4.17.4"
   },
   "devDependencies": {
     "deep-freeze": "0.0.1",
