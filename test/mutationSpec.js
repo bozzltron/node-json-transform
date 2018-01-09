@@ -1,4 +1,4 @@
-var DataTransform = require('../index.js').DataTransform,
+var DataTransform = require('../src/index.js').DataTransform,
 	_ = require("lodash");
 
 var data = {

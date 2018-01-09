@@ -1,4 +1,4 @@
-var DataTransform = require('../index.js').DataTransform,
+var DataTransform = require('../src/index.js').DataTransform,
 	_ = require("lodash");
 
 var data = {
@@ -177,21 +177,21 @@ describe("node-json-transform", function() {
 		var newMap = _.clone(map);
 
 		newMap.operate = [{
-			run: function (val){ 
-				return val + " more info"; 
-			}, 
+			run: function (val){
+				return val + " more info";
+			},
 			on: "info"
 		}];
 
 		var dataTransform = DataTransform(data, newMap);
 
 		var result = dataTransform.transform();
-		expect(result).toEqual([{ 
+		expect(result).toEqual([{
 			name: 'title1',
 		    info: 'mike more info',
 		    text: 'This is a blog.',
 		    date: '11/4/2013',
-		    link: 'http://goo.cm' 
+		    link: 'http://goo.cm'
 		}]);
 	})
 
@@ -200,15 +200,15 @@ describe("node-json-transform", function() {
 
 		newMap.operate = [
 			{
-				run: function (val){ 
-					return val + " more info"; 
-				}, 
+				run: function (val){
+					return val + " more info";
+				},
 				on: "info"
 			},
 			{
-				run: function (val){ 
-					return val + " more text"; 
-				}, 
+				run: function (val){
+					return val + " more text";
+				},
 				on: "text"
 			}
 		];
@@ -216,18 +216,18 @@ describe("node-json-transform", function() {
 		var dataTransform = DataTransform(data, newMap);
 
 		var result = dataTransform.transform();
-		expect(result).toEqual([{ 
+		expect(result).toEqual([{
 			name: 'title1',
 		    info: 'mike more info',
 		    text: 'This is a blog. more text',
 		    date: '11/4/2013',
-		    link: 'http://goo.cm' 
+		    link: 'http://goo.cm'
 		}]);
 	})
 
 
 	it("should allow each function to run on all items", function(){
-		
+
 		var data = {
 			posts: [
 				{name: "peter"},
@@ -256,7 +256,7 @@ describe("node-json-transform", function() {
 	});
 
 	it("should be able to combine mapping with each", function(){
-		
+
 		var data = {
 			posts: [
 				{name: "peter"},
@@ -288,7 +288,7 @@ describe("node-json-transform", function() {
 	});
 
 	it("should delete attributes", function(){
-		
+
 		var data = {
 			posts: [
 				{name: "peter", unwanted: true},
@@ -315,7 +315,7 @@ describe("node-json-transform", function() {
 	});
 
 	it("should use default attributes for missing data", function(){
-		
+
 		var data = {
 			posts: [
 				{name: "peter", valid: true},
