@@ -340,7 +340,7 @@ The expected output.
 Enjoy!
 
 ## Changelog
-1.0.16 ES5 compatibility
+1.0.16 ES5 compatibility  
 1.0.15 Add support for a context object that is passed through to the operate.run and each functions.  
 1.0.14 Add support for default values via "defaults" definition.  Add support for removing attributes via the "remove" definition.  
 1.0.13 Update code examples.  
