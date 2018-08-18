@@ -76,9 +76,9 @@ exports.DataTransform = function(data, map){
 		transform : function(context) {
 
 			var value = this.getValue(data, map.list);
-			var normalized = {};
-					
-			if(value) {
+			var normalized = [];
+
+			if(!_.isEmpty(value)) {
 				var list = this.getList();
 				normalized = map.item ? _.map(list, _.bind(this.iterator, this, map.item)) : list;
 				normalized = _.bind(this.operate, this, normalized)(context);

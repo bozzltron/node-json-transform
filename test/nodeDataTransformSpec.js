@@ -347,4 +347,33 @@ describe("node-json-transform", function() {
 
 	});
 
+	it("should exclude data if not specified", function(){
+		
+		var data = {
+			posts: [
+				{name: "peter", unwanted: true},
+				{name: "paul", unwanted: true},
+				{name: "marry", unwanted:true}
+			]
+		};
+
+		var map = {
+			list: 'posts',
+			item: {
+				name: 'name'
+			}
+		};
+
+		var dataTransform = DataTransform(data, map);
+
+		var result = dataTransform.transform();
+
+		expect(result).toEqual([
+			{name: "peter"},
+			{name: "paul"},
+			{name: "marry"}
+		]);
+
+	});
+
 });

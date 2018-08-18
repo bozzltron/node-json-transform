@@ -61,4 +61,11 @@ describe("node-json-transform", function() {
 
 	});
 
+	it("should always return an array", function() {
+
+    var dataTransform = DataTransform({}, {});
+    expect(_.isArray(dataTransform.transform())).toEqual(true);
+
+	});
+
 });

@@ -1,6 +1,6 @@
 {
   "name": "node-json-transform",
-  "version": "1.0.16",
+  "version": "1.0.17",
   "description": "A node module for transforming and performing operations on JSON.",
   "main": "index.js",
   "scripts": {
