@@ -68,6 +68,21 @@ describe("node-json-transform", function() {
 
 	});
 
+	it("should transform data asynchronously", function() {
+
+		var dataTransform = DataTransform(_.clone(data), map);
+		dataTransform.transformAsync().then(function(result){
+			expect(result).toEqual([{
+				name: "TITLE1",
+				info: "description1",
+				text: "This is a blog.",
+				date: Date.parse('11/4/2013'),
+				link: "http://goo.cm",
+				info: "mike"
+			}]);
+		});
+	});
+
 	it("should allow you to clear out fields", function() {
 
 		// Add a map item to  clear out the "clearMe" field.

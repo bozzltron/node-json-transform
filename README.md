@@ -74,11 +74,18 @@ You can read this as follows:
 - Run Data.parse on the date value.
 - Run each function on all items after mapping and operations.
 
-Run it
+Run it synchronously
 ```javascript
 var dataTransform = DataTransform(data, map);
 var result = dataTransform.transform();
 console.log(result);
+```
+... or asynchronously
+```javascript
+var dataTransform = DataTransform(data, map);
+var result = dataTransform.transformAsync(function(result){
+	console.log(result);
+});
 ```
 
 The expected output.
@@ -340,6 +347,8 @@ The expected output.
 Enjoy!
 
 ## Changelog
+1.0.18 Introducing transformAsync which returns a promise.
+1.0.17 Ensure transform always returns an array
 1.0.16 ES5 compatibility  
 1.0.15 Add support for a context object that is passed through to the operate.run and each functions.  
 1.0.14 Add support for default values via "defaults" definition.  Add support for removing attributes via the "remove" definition.  

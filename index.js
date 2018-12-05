@@ -90,6 +90,16 @@ exports.DataTransform = function(data, map){
 
 		},
 
+		transformAsync : function(context) {
+			return new Promise(function(resolve, reject) {
+				try {
+					resolve(this.transform(context))
+				} catch (err) {
+					reject(err);
+				}
+			}.bind(this));
+		},
+
 		removeAll: function(data){
       if (_.isArray(map.remove)) {
         return _.each(data, this.remove)
