@@ -83,7 +83,7 @@ console.log(result);
 ... or asynchronously
 ```javascript
 var dataTransform = DataTransform(data, map);
-var promise = dataTransform.transformAsync()
+var promise = dataTransform.transformAsync();
 promise.then((function(result){
 	console.log(result);
 });
