@@ -348,6 +348,7 @@ The expected output.
 Enjoy!
 
 ## Changelog
+1.0.19 Update examples
 1.0.18 Introducing transformAsync which returns a promise.
 1.0.17 Ensure transform always returns an array
 1.0.16 ES5 compatibility  
