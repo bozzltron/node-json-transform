@@ -128,8 +128,8 @@ var map = {
 				node2: 'sku',
 			}
 		},
-		remove: ['unwanted']
 	},
+	remove: ['unwanted'],
 	defaults: {
 		"missingData": true
 	},
@@ -348,6 +348,7 @@ The expected output.
 Enjoy!
 
 ## Changelog
+1.0.20 Correct documentation
 1.0.19 Update examples
 1.0.18 Introducing transformAsync which returns a promise.
 1.0.17 Ensure transform always returns an array
