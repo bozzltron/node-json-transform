@@ -24,22 +24,7 @@ exports.DataTransform = function(data, map){
 			var keys = null;
 
 			key = key || map.list;
-			if(key == '') {
-				value = '';
-			} else {
-				keys = key.split('.');
-				for(var i = 0; i < keys.length; i++ ) {
-					if(typeof(value) !== "undefined" && 
-						keys[i] in value) {
-						value = value[keys[i]];
-					} else {
-						return this.defaultOrNull(newKey);
-					}
-				}
-			}
-			
-			return value;
-
+			return key == '' ? '' :  _.get(value, key, this.defaultOrNull(newKey));
 		},
 
 		setValue : function(obj, key, newValue) {
