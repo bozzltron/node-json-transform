@@ -348,6 +348,7 @@ The expected output.
 Enjoy!
 
 ## Changelog
+1.0.21 Uses loadash _get() for source traversal
 1.0.20 Correct documentation
 1.0.19 Update examples
 1.0.18 Introducing transformAsync which returns a promise.
