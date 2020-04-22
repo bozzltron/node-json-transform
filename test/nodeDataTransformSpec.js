@@ -391,4 +391,31 @@ describe("node-json-transform", function() {
 
 	});
 
+	it("should allow for dots in object keys", function (){
+		var data = {
+			input: [
+				{ key: { 'dot.key': 'peter' } },
+				{ key: { 'dot.key': 'paul' } },
+				{ key: { 'dot.key': 'marry' } }
+			]
+		};
+
+		var map = {
+			list: 'input',
+			item: {
+				name: 'key["dot.key"]'
+			}
+		};
+
+		var dataTransform = DataTransform(data, map);
+
+		var result = dataTransform.transform();
+
+		expect(result).toEqual([
+			{name: "peter"},
+			{name: "paul"},
+			{name: "marry"}
+		]);
+	});
+
 });
