@@ -1,14 +1,11 @@
-var DataTransform = require('../index.js').DataTransform,
+var transform = require('../index.js').transform,
 	_ = require("lodash");
 
-var data = {
-	posts: [{
-		title: "title1"
-	}]
-};
+var data = [{
+	title: "title1"
+}];
 
 var map = {
-	list: 'posts',
 	item: {
 		name: "title",
 	}
@@ -21,8 +18,7 @@ describe("node-json-transform", function() {
 
 		var clone = _.clone(data);
 
-		var dataTransform = DataTransform(data, map);
-		dataTransform.transform();
+		transform(data, map);
 
 		expect(clone).toEqual(data);
 
@@ -32,8 +28,7 @@ describe("node-json-transform", function() {
 
 		var clone = _.clone(map);
 
-		var dataTransform = DataTransform(data, map);
-		dataTransform.transform();
+		transform(data, map);
 
 		expect(clone).toEqual(map);
 

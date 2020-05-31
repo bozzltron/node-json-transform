@@ -1,45 +1,41 @@
-var DataTransform = require('../index.js').DataTransform,
+var transform = require('../index.js').transform,
 	_ = require("lodash");
 
-var data = {
-    products: [{
-        id: 'books0',
-        zero: 0,
-        sku: '00234-12312',
-        subitems: [
-            { subid: "0.0", subsku: "subskuvalue0.0" },
-            { subid: "0.1", subsku: "subskuvalue0.1" }
-        ]
-    }, {
-        id: 'books1',
-        zero: 1,
-        sku: '10234-12312',
-        subitems: [
-            { subid: "1.0", subsku: "subskuvalue1.0" },
-            { subid: "1.1", subsku: "subskuvalue1.1" }
-        ]
-    }]
-};
+var data = [{
+		id: 'books0',
+		zero: 0,
+		sku: '00234-12312',
+		subitems: [
+				{ subid: "0.0", subsku: "subskuvalue0.0" },
+				{ subid: "0.1", subsku: "subskuvalue0.1" }
+		]
+}, {
+		id: 'books1',
+		zero: 1,
+		sku: '10234-12312',
+		subitems: [
+				{ subid: "1.0", subsku: "subskuvalue1.0" },
+				{ subid: "1.1", subsku: "subskuvalue1.1" }
+		]
+}];
 
 var baseMap = {
-	'list': 'products',
 	'item' : {
 		'myid': 'id',
 		'mysku': 'sku',
 		'mysubitems': 'subitems'
 	},
-    operate: [
-        {
-            'run': function(ary) { 
-            	return DataTransform({list:ary}, nestedMap).transform();
-            }, 
-            'on': 'mysubitems'
-        }
-    ]
+	operate: [
+			{
+					'run': function(ary) { 
+						return transform(ary, nestedMap);
+					}, 
+					'on': 'mysubitems'
+			}
+	]
 };
 
 var nestedMap = {
-	'list': 'list',
 	'item' : {
 		'mysubid': 'subid',
 		'mysubsku': 'subsku'
@@ -69,11 +65,7 @@ var expected = [
 describe("node-json-transform", function() {
 
 	it("should copy arrays", function() {
-
-		var dataTransform = DataTransform(data, baseMap);
-
-		expect(dataTransform.transform()).toEqual(expected);
-
+		expect(transform(data, baseMap)).toEqual(expected);
 	});
 
 });

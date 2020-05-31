@@ -1,4 +1,5 @@
 var DataTransform = require('../index.js').DataTransform,
+	transform = require('../index.js').transform,
 	_ = require("lodash");
 
 var data = {
@@ -61,10 +62,15 @@ describe("node-json-transform", function() {
 
 	});
 
-	it("should always return an array", function() {
+	it("should pass the context to each via functional api", function() {
 
-    var dataTransform = DataTransform({}, {});
-    expect(_.isArray(dataTransform.transform())).toEqual(true);
+    var context = {
+      intro: 'Hi '
+    };
+
+    expect(transform(_.clone(data), map, context)).toEqual([{
+      greeting: "Hi title1"
+    }]);
 
 	});
 

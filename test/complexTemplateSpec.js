@@ -1,8 +1,7 @@
-var DataTransform = require('../index.js').DataTransform,
+var transform = require('../index.js').transform,
 	_ = require("lodash");
 
 var map = {
-	list: 'items',
 	item: {
 		id: 'id',
 		sku: 'sku',
@@ -42,15 +41,13 @@ var map = {
 	},]
 };
 
-var object = {
-	items:[
-		{
-			id: 'books',
-			zero: 0,
-			sku:'10234-12312'
-		}
-	]
-};
+var object = [
+	{
+		id: 'books',
+		zero: 0,
+		sku:'10234-12312'
+	}
+];
 
 describe("node-json-transform", function() {
 
@@ -90,8 +87,7 @@ describe("node-json-transform", function() {
 		    }
 		];
 
-		var dataTransform = new DataTransform(object, map);
-		var result = dataTransform.transform();
+		var result = transform(object, map);
 
 		expect(result).toEqual(expected);
 

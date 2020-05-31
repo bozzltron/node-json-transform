@@ -2,7 +2,7 @@
 
 var _ = require('lodash');
 
-exports.DataTransform = function(data, map){
+var DataTransform = function(data, map){
 
 	return {
 
@@ -59,18 +59,29 @@ exports.DataTransform = function(data, map){
 		},
 
 		transform : function(context) {
-
-			var value = this.getValue(data, map.list);
+			var useList = map.list != undefined;
+			var value; 
+			if (useList) { 
+				value = this.getValue(data, map.list);
+			} else if (_.isArray(data) && !useList) {
+				value = data;
+			} else if (_.isObject(data) && !useList) { 
+				value = [data];
+			}
 			var normalized = [];
-
+		
 			if(!_.isEmpty(value)) {
-				var list = this.getList();
+				var list = useList ? this.getList() : value;
 				normalized = map.item ? _.map(list, _.bind(this.iterator, this, map.item)) : list;
 				normalized = _.bind(this.operate, this, normalized)(context);
 				normalized = this.each(normalized, context);
 				normalized = this.removeAll(normalized);
 			}
 			
+			if(!useList && _.isObject(data) && !_.isArray(data)){
+				return normalized[0];
+			}
+
 			return normalized;
 
 		},
@@ -158,3 +169,15 @@ exports.DataTransform = function(data, map){
 	};
 
 };
+
+exports.DataTransform = DataTransform;
+
+exports.transform = function(data, map, context) {
+	var dataTransform = new DataTransform(data, map)
+	return dataTransform.transform(context);
+}
+
+exports.transformAsync = function(data, map, context) {
+	var dataTransform = new DataTransform(data, map)
+	return dataTransform.transformAsync(context);
+}

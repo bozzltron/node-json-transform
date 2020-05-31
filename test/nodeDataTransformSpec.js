@@ -1,4 +1,5 @@
 var DataTransform = require('../index.js').DataTransform,
+    transform = require('../index.js').transform,
 	_ = require("lodash");
 
 var data = {
@@ -416,6 +417,61 @@ describe("node-json-transform", function() {
 			{name: "paul"},
 			{name: "marry"}
 		]);
+	});
+
+	it("should transform an object literal if list is not set and data is an object", function (){
+		var data = {
+			text: 'hello'
+		};
+
+		var map = {
+			item: {
+				message: 'text'
+			}
+		};
+
+		var dataTransform = DataTransform(data, map);
+
+		var result = dataTransform.transform();
+
+		expect(result).toEqual({
+			message: 'hello'
+		});
+	});
+
+	it("should transform via transform function", function (){
+		var data = {
+			text: 'hello'
+		};
+
+		var map = {
+			item: {
+				message: 'text'
+			}
+		};
+
+		var result = transform(data, map);
+
+		expect(result).toEqual({
+			message: 'hello'
+		});
+	});
+
+	it("should try use the map directly if no item", function (){
+		
+		var data = {
+			text: 'hello'
+		};
+
+		var map = {
+			item: { message: 'text' }
+		};
+		
+		var result = transform(data, map);
+
+		expect(result).toEqual({
+			message: 'hello'
+		});
 	});
 
 });
