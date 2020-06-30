@@ -380,11 +380,12 @@ The expected output.
 Enjoy!
 
 ## Changelog
-1.1.0  New functional transform() interface.  Object support.  Updated documentation.
-1.0.21 Uses loadash _get() for source traversal
-1.0.20 Correct documentation
-1.0.19 Update examples
-1.0.18 Introducing transformAsync which returns a promise.
+1.1.1 Omit undefined keys from the results.  
+1.1.0  New functional transform() interface.  Object support.  Updated documentation.  
+1.0.21 Uses loadash _get() for source traversal  
+1.0.20 Correct documentation  
+1.0.19 Update examples  
+1.0.18 Introducing transformAsync which returns a promise.  
 1.0.17 Ensure transform always returns an array
 1.0.16 ES5 compatibility  
 1.0.15 Add support for a context object that is passed through to the operate.run and each functions.  

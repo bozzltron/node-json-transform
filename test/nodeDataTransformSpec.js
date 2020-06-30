@@ -474,4 +474,31 @@ describe("node-json-transform", function() {
 		});
 	});
 
+	it("should omit undefined keys from the result", function (){
+		
+		var data = [
+			{
+				text: 'hello'
+			},
+			{
+
+			}]
+
+
+		var map = {
+			item: { message: 'text' }
+		};
+		
+		var result = transform(data, map);
+
+		expect(result).toEqual([
+			{
+				message: 'hello'
+			},
+			{
+
+			}
+		]);
+	});	
+
 });

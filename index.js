@@ -7,7 +7,7 @@ var DataTransform = function(data, map){
 	return {
 
 		defaultOrNull: function(key) {
-			return key && map.defaults ? map.defaults[key] : null;
+			return key && map.defaults ? map.defaults[key] : undefined;
 		},
 
 		getValue : function(obj, key, newKey) {
@@ -149,7 +149,8 @@ var DataTransform = function(data, map){
 			}
 			_.each(map, _.bind(function(oldkey, newkey) {
 				if(typeof oldkey === 'string' && oldkey.length > 0) {
-					obj[newkey] = this.getValue(item, oldkey, newkey);
+					 var value = this.getValue(item, oldkey, newkey);
+					 if (value !== undefined) obj[newkey] = value;
 				} else if( _.isArray(oldkey) ) {
 					var array = _.map(oldkey, _.bind(function(item,map) {return this.iterator(map,item)}, this , item));//need to swap arguments for bind
 					obj[newkey] = array;
