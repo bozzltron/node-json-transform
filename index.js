@@ -3,6 +3,9 @@
 var _ = require('lodash');
 
 var DataTransform = function(data, map){
+	if (_.hasIn(map, 'item')) {
+		map.item = updateArrayKeys(map.item, data)
+	}
 
 	return {
 
@@ -170,6 +173,69 @@ var DataTransform = function(data, map){
 	};
 
 };
+
+const getSrcKey = function (newkey) {
+    if (newkey.indexOf('[') !== -1 && newkey.endsWith(']') ) {
+        return [
+        	newkey.substring(0, newkey.indexOf('[')),
+        	newkey.substring(newkey.indexOf('[') + 1, newkey.length - 1)
+        ]
+    }
+    throw `SyntaxError: no source key found`
+};
+
+function updateArrayKeys(map, data) {
+	let newmap = {}
+
+	// loop thru map object
+	for(let [newkey, oldkey] of _.entries(map)) {
+
+		// find keys ending with ]
+		if (_.endsWith(newkey, ']')) {
+
+			// extract srckey, make newkey
+			var [ tempkey, srckey ] = getSrcKey(newkey)
+			newmap[tempkey] = map[newkey]
+
+			// start creating newoldkeys array
+			var newoldkey = []
+
+			// find length of srckey
+			_.get(data, srckey).forEach((elem, index) => {
+				var obj = {}
+
+				// loop thru the oldkey
+				for(let [oldkey_key, oldkey_val] of _.entries(oldkey)) {
+
+					// if any key ends with ] 
+					if (_.endsWith(oldkey_key, ']')) {
+
+						// then prepend srckey with index after [
+						const newoldkey_key = `${oldkey_key.slice(0, oldkey_key.indexOf('[') + 1)}${srckey}[${index}].${oldkey_key.slice(oldkey_key.indexOf('[') + 1)}`
+						for (const [k, v] of _.entries(updateArrayKeys({ [newoldkey_key]: oldkey_val }, data))) {
+							obj[k] = v
+						}
+					}
+
+					// if val is string then prepend srckey with index
+					if (_.isString(oldkey_val)) {
+						obj[oldkey_key] = `${srckey}[${index}].${oldkey_val}`
+					}
+					// else leave
+				}
+				
+				// push to newoldkey array
+				newoldkey.push(obj)
+			})
+			
+			newmap[tempkey] = newoldkey
+
+		} else {
+			newmap[newkey] = oldkey
+		}
+	}
+	return newmap
+}
 
 exports.DataTransform = DataTransform;
 

@@ -377,6 +377,142 @@ The expected output.
 ]
 ```
 
+### Nested Array Handling
+
+Suppose this is the data
+
+```javascript
+var data = {
+    "name": "Sarvpriy",
+    "users": [
+      {
+        id: "1",
+        name: "arya",
+        comments: [
+          { 
+            text: "user id 1 comment no 1",
+            replies: [{
+                title: "reply 1 to user id 1 comment no 1"
+            }, {
+                title: "reply 2 to user id 1 comment no 1"
+            }]
+          },
+          { 
+            text: "user id 1 comment no 2",
+            replies: [{
+                title: "reply 1 to user id 1 comment no 2"
+            }, {
+                title: "reply 2 to user id 1 comment no 2"
+            }]
+          }
+        ]
+      }, {
+        id: "2",
+        name: "john",
+        comments: [
+          { 
+            text: "user id 2 comment no 1",
+            replies: [{
+                title: "reply 1 to user id 2 comment no 1"
+            }, {
+                title: "reply 2 to user id 2 comment no 1"
+            }]
+          },
+          { 
+            text: "user id 2 comment no 2",
+            replies: [{
+                title: "reply 1 to user id 2 comment no 2"
+            }, {
+                title: "reply 2 to user id 2 comment no 2"
+            }]
+          }
+        ]
+      }
+    ]
+};
+```
+
+and you want this type of result
+```javascript
+{
+	"myname":"Sarvpriy",
+	"myusers": [{
+		"userid":"1",
+		"comments": [{
+			"mytext":"user id 1's comment no 1",
+			"myreplies": [{
+				"mytitle":"reply 1 to user id 1's comment no 1"
+			},{
+				"mytitle":"reply 2 to user id 1's comment no 1"
+			}]
+		},{
+			"mytext":"user id 1's comment no 2",
+			"myreplies": [{
+				"mytitle":"reply 1 to user id 1's comment no 2"
+			},{
+				"mytitle":"reply 2 to user id 1's comment no 2"
+			}]
+		}]
+	},{
+		"userid":"2",
+		"comments": [{
+			"mytext":"user id 2's comment no 1",
+			"myreplies": [{
+				"mytitle":"reply 1 to user id 2's comment no 1"
+			},{
+				"mytitle":"reply 2 to user id 2's comment no 1"
+			}]
+		},{
+			"mytext":"user id 2's comment no 2",
+			"myreplies": [{
+				"mytitle":"reply 1 to user id 2's comment no 2"
+			},{
+				"mytitle":"reply 2 to user id 2's comment no 2"
+			}]
+		}]
+	}]
+}
+```
+This can be achieved through the `operate` params. 
+But there are two problems
+- You cannot save your map object in other places ex. in Database.
+- `operate` doesn't work on the nested level(more then one level deep).
+
+no need to say that it is extreamly complex.
+To acheive this the `map` object will look like this
+
+```javascript
+var map = {
+  "item" : {
+    "myname": "name",
+    "myusers[users]": {
+        "userid": "id",
+        "comments[comments]": {
+            "mytext": "text",
+            "myreplies[replies]": {
+                "mytitle": "title"
+            }
+        }
+    }
+  }
+};
+```
+So in a nutshel the `map` object should be
+
+```javascript
+var map = {
+  "item": {
+    "new_arr_key[array_key_in_data]": {    // `map` object b/w elements inside the new_arr_key and array_key_in_data
+      "some_new_key": "key_from_an_elem_in_array_key_in_data"
+      "nested_key[nested_key_inside_an_elem_in_array_key_in_data]": { // again `map` object
+        .
+        ... // nesting goes on and on
+      }
+    }
+  }
+}
+```
+
 Enjoy!
 
 ## Changelog
