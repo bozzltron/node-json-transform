@@ -142,4 +142,8 @@ describe("node-json-transform", function() {
     expect(transform(test2_data, test2_map)).toEqual(test2_expected);
   });
 
+  it("should handle root object ex. { item: `payload`}", function() {
+    expect(transform({"payload": test2_data}, { "item": "payload"})).toEqual(test2_data);
+  });
+
 });
