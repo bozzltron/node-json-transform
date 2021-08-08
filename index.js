@@ -3,7 +3,7 @@
 var _ = require('lodash');
 
 var DataTransform = function(data, map){
-	if (_.hasIn(map, 'item')) {
+	if (_.hasIn(map, 'item') && _.isObject(map.item)) {
 		map.item = updateArrayKeys(map.item, data)
 	}
 
