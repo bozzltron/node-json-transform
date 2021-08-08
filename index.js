@@ -230,7 +230,17 @@ function updateArrayKeys(map, data) {
 			
 			newmap[tempkey] = newoldkey
 
-		} else {
+		} 
+		else if(_.isObject(oldkey) && !_.isArray(oldkey)) {
+			newmap[newkey] = updateArrayKeys(oldkey, data)
+		} 
+		else if(_.isArray(oldkey)) {
+			newmap[newkey] = _.map(oldkey, (val) => {
+				if(_.isString(val)) return val
+				else if(_.isObject(val) && !_.isArray(val)) return updateArrayKeys(val, data)
+			})
+		} 
+		else {
 			newmap[newkey] = oldkey
 		}
 	}

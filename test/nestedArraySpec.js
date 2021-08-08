@@ -2,7 +2,7 @@ var DataTransform = require('../index.js').DataTransform,
 	transform = require('../index.js').transform,
 	_ = require("lodash");
 
-var data = {
+var test1_data = {
     "name": "Sarvpriy",
     "users": [
       {
@@ -51,7 +51,7 @@ var data = {
     ]
 };
 
-var map = {
+var test1_map = {
     "item" : {
       "myname": "name",
       "myusers[users]": {
@@ -66,7 +66,7 @@ var map = {
     }
   };
   
-var expected = {
+var test1_expected = {
 	"myname":"Sarvpriy",
 	"myusers": [{
 		"userid":"1",
@@ -108,7 +108,38 @@ var expected = {
 describe("node-json-transform", function() {
 
 	it("should change array keys and prefix the oldkeys with full srckey path", function() {
-		expect(transform(data, map)).toEqual(expected);
+		expect(transform(test1_data, test1_map)).toEqual(test1_expected);
 	});
+
+});
+
+
+var test2_data = {
+    "to": [{
+        "email": "sarvpriy.arya@gmail.com",
+        "name": "Sarvpriy Arya"
+    },{
+        "email": "sarvpriy.arya@gmail.com",
+        "name": "Sarvpriy Arya"
+    }]
+};
+
+var test2_map = {
+  "item": {
+        "personalizations": [{
+            "to[to]": {
+                "email": "email"
+            }
+        }]
+    }
+};
+
+var test2_expected = {"personalizations":[{"to":[{"email":"sarvpriy.arya@gmail.com"},{"email":"sarvpriy.arya@gmail.com"}]}]}
+
+describe("node-json-transform", function() {
+
+  it("should work when top level is not an array", function() {
+    expect(transform(test2_data, test2_map)).toEqual(test2_expected);
+  });
 
 });
