@@ -380,6 +380,7 @@ The expected output.
 Enjoy!
 
 ## Changelog
+1.1.2 Security upgrade
 1.1.1 Omit undefined keys from the results.  
 1.1.0  New functional transform() interface.  Object support.  Updated documentation.  
 1.0.21 Uses loadash _get() for source traversal  

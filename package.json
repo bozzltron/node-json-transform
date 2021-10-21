@@ -26,6 +26,7 @@
   },
   "devDependencies": {
     "deep-freeze": "0.0.1",
-    "jasmine-node": "^3.0.0"
+    "jasmine-node": "^3.0.0",
+    "underscore": "^1.13.1"
   }
 }
